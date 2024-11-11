@@ -1,9 +1,12 @@
+import Configuration from './config/configuration';
 import {
   Module,
 } from '@nestjs/common';
 
 @Module({
-  imports: [],
+  imports: [
+    Configuration,
+  ],
   controllers: [],
   providers: [],
 })
