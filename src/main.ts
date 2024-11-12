@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import {
   NestFactory,
 } from '@nestjs/core';
@@ -23,6 +24,8 @@ async function bootstrap() {
     const documentFactory = () => SwaggerModule.createDocument(app, config);
     SwaggerModule.setup("api", app, documentFactory);
   }
+  app
+    .use(cookieParser());
   const port = configService.get<number>("port");
   await app.listen(port);
 }
