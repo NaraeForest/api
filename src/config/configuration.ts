@@ -19,6 +19,10 @@ const configuartion = () => ({
       password: process.env.DATABASE_WRITABLE_PASSWORD,
     },
   },
+  naver: {
+    clientId: process.env.NAVER_CLIENT_ID,
+    clientSecret: process.env.NAVER_CLIENT_SECRET,
+  },
   cookieSecret: process.env.COOKIE_SECRET,
   csrfSecret: process.env.CSRF_SECRET,
 });
