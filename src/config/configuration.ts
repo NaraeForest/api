@@ -19,6 +19,8 @@ const configuartion = () => ({
       password: process.env.DATABASE_WRITABLE_PASSWORD,
     },
   },
+  cookieSecret: process.env.COOKIE_SECRET,
+  csrfSecret: process.env.CSRF_SECRET,
 });
 
 export default ConfigModule.forRoot({

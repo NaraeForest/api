@@ -6,12 +6,18 @@ import {
   ReadOnlyDataSource,
   WritableDataSource,
 } from './config/database';
+import {
+  RegisteredModules,
+  Routes,
+} from './router.module';
 
 @Module({
   imports: [
     Configuration,
     WritableDataSource,
     ReadOnlyDataSource,
+    Routes,
+    ...RegisteredModules,
   ],
   controllers: [],
   providers: [],
