@@ -10,6 +10,9 @@ import {
 import {
   KakaoLoginModule,
 } from "./social/kakao/kakao-login.module";
+import {
+  GoogleLoginModule,
+} from "./social/google/google-login.module";
 
 export const Routes = RouterModule.register([
   {
@@ -33,6 +36,10 @@ export const Routes = RouterModule.register([
                 path: "kakao",
                 module: KakaoLoginModule,
               },
+              {
+                path: "google",
+                module: GoogleLoginModule,
+              },
             ],
           },
         ],
@@ -45,4 +52,5 @@ export const RegisteredModules = [
   CSRFModule,
   NaverLoginModule,
   KakaoLoginModule,
+  GoogleLoginModule,
 ];

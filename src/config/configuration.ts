@@ -28,6 +28,11 @@ const configuartion = () => ({
     clientSecret: process.env.KAKAO_CLIENT_SECRET,
     redirectURL: process.env.KAKAO_REDIRECT_URL,
   },
+  google: {
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    redirectURL: process.env.GOOGLE_REDIRECT_URL,
+  },
   cookieSecret: process.env.COOKIE_SECRET,
   csrfSecret: process.env.CSRF_SECRET,
 });
