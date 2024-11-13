@@ -39,6 +39,7 @@ export class KakaoLoginController {
     }
     const token = await this.loginService.requestAccessToken(code);
     const profile = await this.loginService.requestProfile(token.accessToken);
+    console.log(profile);
     return res.status(200).json("work")
   }
 }

@@ -39,6 +39,7 @@ export class NaverLoginController {
     }
     const token = await this.loginService.requestAccessToken(code, state);
     const profile = await this.loginService.requestProfile(token.accessToken);
+    console.log(profile);
     return res.status(200).json({ work: "helo" })
   }
 }

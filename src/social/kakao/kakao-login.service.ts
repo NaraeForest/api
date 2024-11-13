@@ -53,6 +53,25 @@ export class KakaoLoginService {
     };
     const res = await fetch("https://kapi.kakao.com/v2/user/me", init);
     const data = await res.json();
-    console.log(data);
+    return {
+      id: data.id,
+      connectedAt: data.connected_at,
+      properties: {
+        nickname: data.properties.nickname,
+        profileImage: data.properties.profile_image,
+        thumbnailImage: data.properties.thumbnail_image
+      },
+      kakaoAccount: {
+        profileNicknameNeedsAgreement: data.kakao_account.profile_nickname_needs_agreement,
+        profileImageNeedsAgreement: data.kakao_account.profile_image_needs_agreement,
+        profile: {
+          nickname: '#',
+          thumbnailImageUrl: data.kakao_account.profile.thumbnail_image_url,
+          profile_image_url: data.kakao_account.profile.profile_image_url,
+          isDefaultImage: data.kakao_account.profile.is_default_image,
+          isDefaultNickname: data.kakao_account.profile.is_default_nickname
+        },
+      },
+    };
   }
 }

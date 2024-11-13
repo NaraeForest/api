@@ -42,6 +42,16 @@ export class NaverLoginService {
     };
     const res = await fetch("https://openapi.naver.com/v1/nid/me", init);
     const data = await res.json();
-    console.log(data);
+    return {
+      resultcode: data.resultcode,
+      message: data.message,
+      response: {
+        id: data.response.id,
+        nickname: data.response.nickname,
+        profileImage: data.response.profile_image,
+        age: data.response.age,
+        gender: data.response.gender,
+      },
+    };
   }
 }
