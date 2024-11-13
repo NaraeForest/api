@@ -2,11 +2,14 @@ import {
   RouterModule,
 } from "@nestjs/core";
 import {
+  CSRFModule,
+} from "./csrf/csrf.module";
+import {
   NaverLoginModule,
 } from "./social/naver/naver-login.module";
 import {
-  CSRFModule,
-} from "./csrf/csrf.module";
+  KakaoLoginModule,
+} from "./social/kakao/kakao-login.module";
 
 export const Routes = RouterModule.register([
   {
@@ -26,6 +29,10 @@ export const Routes = RouterModule.register([
                 path: "naver",
                 module: NaverLoginModule,
               },
+              {
+                path: "kakao",
+                module: KakaoLoginModule,
+              },
             ],
           },
         ],
@@ -37,4 +44,5 @@ export const Routes = RouterModule.register([
 export const RegisteredModules = [
   CSRFModule,
   NaverLoginModule,
+  KakaoLoginModule,
 ];
