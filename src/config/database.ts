@@ -11,6 +11,7 @@ import {
   SocialKakao,
   SocialNaver,
   Auth,
+  SocialGoogle,
 } from "src/entities";
 
 const defaultDataSoruceOption: TypeOrmModuleOptions = {
@@ -22,6 +23,7 @@ const defaultDataSoruceOption: TypeOrmModuleOptions = {
     SocialKakao,
     SocialNaver,
     Auth,
+    SocialGoogle,
   ],
 };
 

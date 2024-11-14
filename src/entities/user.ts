@@ -12,6 +12,9 @@ import {
 import {
   SocialNaver,
 } from "./social-naver";
+import {
+  SocialGoogle,
+} from "./social-google";
 
 @Entity({
   name: "user"
@@ -55,4 +58,7 @@ export class User extends DefaultEntity {
 
   @OneToOne(() => SocialNaver, (naver) => naver.user, { cascade: ["insert"] })
   naver: SocialNaver;
+
+  @OneToOne(() => SocialGoogle, (google) => google.user, { cascade: ["insert"] })
+  google: SocialGoogle;
 }

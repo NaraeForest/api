@@ -4,12 +4,24 @@ import {
 import {
   ConfigService,
 } from "@nestjs/config";
+import {
+  InjectRepository,
+} from "@nestjs/typeorm";
+import {
+  SocialGoogle,
+  User,
+} from "src/entities";
+import {
+  Repository,
+} from "typeorm";
 
 @Injectable()
 export class GoogleLoginService {
 
   constructor(
     private readonly configService: ConfigService,
+    @InjectRepository(User, "writable")
+    private readonly userRepository: Repository<User>,
   ) { }
 
   public async requestAccessToken(code: string) {
@@ -60,5 +72,28 @@ export class GoogleLoginService {
       givenName: data.given_name,
       picture: data.picture,
     };
+  }
+
+  public async findOneBySocialId(socialId: string) {
+    const user = await this.userRepository.findOne({
+      relations: ["google"],
+      where: {
+        google: {
+          socialId: socialId,
+        },
+      },
+    });
+    return user;
+  }
+
+  public async createUser(nickname: string, profileImage: string, socialId: string) {
+    const google = new SocialGoogle();
+    google.socialId = socialId;
+    const user = new User();
+    user.nickname = nickname;
+    user.profileImage = profileImage;
+    user.google = google;
+    const entity = this.userRepository.create(user);
+    return this.userRepository.save(entity);
   }
 }
