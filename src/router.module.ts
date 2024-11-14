@@ -16,6 +16,9 @@ import {
 import {
   AuthModule,
 } from "./auth/auth.module";
+import {
+  HealthModule,
+} from "./health/health.module";
 
 export const Routes = RouterModule.register([
   {
@@ -46,13 +49,14 @@ export const Routes = RouterModule.register([
               },
             ],
           },
-          {
-            path: "user",
-          },
         ],
       },
     ],
   },
+  {
+    path: "health",
+    module: HealthModule,
+  }
 ]);
 
 export const RegisteredModules = [
@@ -61,4 +65,5 @@ export const RegisteredModules = [
   KakaoLoginModule,
   GoogleLoginModule,
   AuthModule,
+  HealthModule,
 ];

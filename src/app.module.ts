@@ -18,6 +18,9 @@ import {
 import {
   AuthFactory,
 } from './auth/auth.module';
+import {
+  TerminusModule,
+} from '@nestjs/terminus';
 
 @Module({
   imports: [
@@ -27,6 +30,12 @@ import {
     Routes,
     AuthFactory,
     ...RegisteredModules,
+    TerminusModule.forRoot({
+      /**
+       * kubernetes의 gracefull shutdown 시간과 동일하게 설정
+       */
+      gracefulShutdownTimeoutMs: 30000,
+    }),
   ],
   controllers: [],
   providers: [],
