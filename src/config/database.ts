@@ -9,6 +9,7 @@ import {
 import {
   User,
   SocialKakao,
+  SocialNaver,
   Auth,
 } from "src/entities";
 
@@ -19,6 +20,7 @@ const defaultDataSoruceOption: TypeOrmModuleOptions = {
   entities: [
     User,
     SocialKakao,
+    SocialNaver,
     Auth,
   ],
 };

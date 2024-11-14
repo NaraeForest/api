@@ -4,12 +4,24 @@ import {
 import {
   ConfigService,
 } from "@nestjs/config";
+import {
+  InjectRepository,
+} from "@nestjs/typeorm";
+import {
+  SocialNaver,
+  User,
+} from "src/entities";
+import {
+  Repository,
+} from "typeorm";
 
 @Injectable()
 export class NaverLoginService {
 
   constructor(
     private readonly configService: ConfigService,
+    @InjectRepository(User, "writable")
+    private readonly userRepository: Repository<User>,
   ) { }
 
   public async requestAccessToken(code: string, state: string) {
@@ -53,5 +65,28 @@ export class NaverLoginService {
         gender: data.response.gender,
       },
     };
+  }
+
+  public async findOneBySocialId(socialId: string) {
+    const user = await this.userRepository.findOne({
+      relations: ["naver"],
+      where: {
+        naver: {
+          socialId: socialId,
+        },
+      },
+    });
+    return user;
+  }
+
+  public async createUser(nickname: string, profileImage: string, socialId: string) {
+    const naver = new SocialNaver();
+    naver.socialId = socialId;
+    const user = new User();
+    user.nickname = nickname;
+    user.profileImage = profileImage;
+    user.naver = naver;
+    const entity = await this.userRepository.create(user);
+    return this.userRepository.save(entity);
   }
 }

@@ -6,7 +6,12 @@ import {
 import {
   DefaultEntity,
 } from "./default-entity";
-import { SocialKakao } from "./social-kakao";
+import {
+  SocialKakao,
+} from "./social-kakao";
+import {
+  SocialNaver,
+} from "./social-naver";
 
 @Entity({
   name: "user"
@@ -45,6 +50,9 @@ export class User extends DefaultEntity {
   })
   bio: string;
 
-  @OneToOne(() => SocialKakao, (kakao) => kakao.user, { cascade: ["insert"], })
+  @OneToOne(() => SocialKakao, (kakao) => kakao.user, { cascade: ["insert"] })
   kakao: SocialKakao;
+
+  @OneToOne(() => SocialNaver, (naver) => naver.user, { cascade: ["insert"] })
+  naver: SocialNaver;
 }
