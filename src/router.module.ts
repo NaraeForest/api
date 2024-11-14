@@ -13,6 +13,9 @@ import {
 import {
   GoogleLoginModule,
 } from "./social/google/google-login.module";
+import {
+  AuthModule,
+} from "./auth/auth.module";
 
 export const Routes = RouterModule.register([
   {
@@ -27,6 +30,7 @@ export const Routes = RouterModule.register([
         children: [
           {
             path: "auth",
+            module: AuthModule,
             children: [
               {
                 path: "naver",
@@ -42,6 +46,9 @@ export const Routes = RouterModule.register([
               },
             ],
           },
+          {
+            path: "user",
+          },
         ],
       },
     ],
@@ -53,4 +60,5 @@ export const RegisteredModules = [
   NaverLoginModule,
   KakaoLoginModule,
   GoogleLoginModule,
+  AuthModule,
 ];

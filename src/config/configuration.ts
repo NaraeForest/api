@@ -35,10 +35,15 @@ const configuartion = () => ({
   },
   cookieSecret: process.env.COOKIE_SECRET,
   csrfSecret: process.env.CSRF_SECRET,
+  jwt: {
+    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
+    refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
+  },
 });
 
 export default ConfigModule.forRoot({
   load: [
     configuartion,
   ],
+  isGlobal: true,
 });
