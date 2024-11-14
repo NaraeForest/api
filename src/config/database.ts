@@ -37,6 +37,12 @@ export const ReadOnlyDataSource = TypeOrmModule.forRootAsync({
   ],
   useFactory: (configService: ConfigService) => ({
     ...defaultDataSoruceOption,
+    /**
+     * 해당 name은 nest에서 graceful shutdown이 발생 했을 때, typeorm 모듈에서 DataSource를 찾는 용도의 이름이다.
+     * 따라서 위의 name과 useFactory의 name과 일치해야 한다.
+     * 다르면 graceful shutdown이 되지 않고 오류가 발생한다.
+     */
+    name: "readonly",
     host: configService.getOrThrow("database.readonly.host"),
     port: configService.getOrThrow("database.readonly.port"),
     username: configService.getOrThrow("database.readonly.username"),
@@ -55,6 +61,12 @@ export const WritableDataSource = TypeOrmModule.forRootAsync({
   ],
   useFactory: (configService: ConfigService) => ({
     ...defaultDataSoruceOption,
+    /**
+     * 해당 name은 nest에서 graceful shutdown이 발생 했을 때, typeorm 모듈에서 DataSource를 찾는 용도의 이름이다.
+     * 따라서 위의 name과 useFactory의 name과 일치해야 한다.
+     * 다르면 graceful shutdown이 되지 않고 오류가 발생한다.
+     */
+    name: "writable",
     host: configService.getOrThrow("database.writable.host"),
     port: configService.getOrThrow("database.writable.port"),
     username: configService.getOrThrow("database.writable.username"),
