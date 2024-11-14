@@ -38,6 +38,7 @@ const configuartion = () => ({
   jwt: {
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
+    loginRedirectURL:  process.env.LOGIN_REDIRECT_URL,
   },
 });
 

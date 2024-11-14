@@ -4,12 +4,17 @@ import {
 import {
   ConfigService,
 } from "@nestjs/config";
+import { InjectRepository } from "@nestjs/typeorm";
+import { SocialKakao, User } from "src/entities";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class KakaoLoginService {
 
   constructor(
     private readonly configService: ConfigService,
+    @InjectRepository(User, "writable")
+    private readonly userRepository: Repository<User>,
   ) { }
 
   public async requestAccessToken(code: string) {
@@ -73,5 +78,28 @@ export class KakaoLoginService {
         },
       },
     };
+  }
+
+  public async findOneBySocialId(socialId: number) {
+    const user = await this.userRepository.findOne({
+      relations: ["kakao"],
+      where: {
+        kakao: {
+          socialId: socialId,
+        },
+      },
+    });
+    return user;
+  }
+
+  public async createUser(nickname: string, profileImage: string, socialId: number) {
+    const kakao = new SocialKakao();
+    kakao.socialId = socialId;
+    const user = new User();
+    user.nickname = nickname;
+    user.profileImage = profileImage;
+    user.kakao = kakao;
+    const entity = await this.userRepository.create(user);
+    return this.userRepository.save(entity);
   }
 }

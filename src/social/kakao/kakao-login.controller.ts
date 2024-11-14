@@ -13,12 +13,20 @@ import {
 import {
   KakaoLoginService,
 } from "./kakao-login.service";
+import {
+  AuthService,
+} from "src/auth/auth.service";
+import {
+  ConfigService,
+} from "@nestjs/config";
 
 @Controller()
 export class KakaoLoginController {
 
   constructor(
     private readonly loginService: KakaoLoginService,
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService,
   ) { }
 
   @Get("callback")
@@ -39,7 +47,17 @@ export class KakaoLoginController {
     }
     const token = await this.loginService.requestAccessToken(code);
     const profile = await this.loginService.requestProfile(token.accessToken);
-    console.log(profile);
-    return res.status(200).json("work")
+    let user = await this.loginService.findOneBySocialId(profile.id);
+    if (user == null) {
+      user = await this.loginService.createUser(profile.properties.nickname, profile.properties.profileImage, profile.id);
+    }
+    const accessToken = await this.authService.issueAccessToken(user);
+    const accessTokenExpireDate = this.authService.getExpireDate(accessToken);
+    const refreshToken = await this.authService.issueRefreshToken(user);
+    const refreshTokenExpireDate = this.authService.getExpireDate(refreshToken);
+    return res
+      .cookie("access-token", accessToken, { expires: accessTokenExpireDate, httpOnly: true })
+      .cookie("refresh-token", refreshToken, { expires: refreshTokenExpireDate, httpOnly: true })
+      .redirect(this.configService.getOrThrow("jwt.loginRedirectURL"));
   }
 }
