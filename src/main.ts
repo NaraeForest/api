@@ -47,6 +47,10 @@ async function bootstrap() {
     optionsSuccessStatus: 204,
     preflightContinue: false,
   });
+  /**
+   * Gracefull Shutdown 활성화
+   */
+  app.enableShutdownHooks();
   const {
     invalidCsrfTokenError,
     doubleCsrfProtection,
