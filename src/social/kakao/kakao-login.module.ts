@@ -24,7 +24,6 @@ import {
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([SocialKakao, User], "readonly"),
     TypeOrmModule.forFeature([SocialKakao, User], "writable"),
     AuthModule,
   ],
