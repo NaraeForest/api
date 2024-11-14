@@ -86,7 +86,7 @@ export class NaverLoginService {
     user.nickname = nickname;
     user.profileImage = profileImage;
     user.naver = naver;
-    const entity = await this.userRepository.create(user);
+    const entity = this.userRepository.create(user);
     return this.userRepository.save(entity);
   }
 }

@@ -17,7 +17,10 @@ import {
 export class SocialKakao extends DefaultEntity {
 
   @Column({
-    type: "bigint"
+    type: "bigint",
+    name: "social_id",
+    nullable: false,
+    unique: true,
   })
   socialId: number;
 

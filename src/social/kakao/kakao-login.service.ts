@@ -99,7 +99,7 @@ export class KakaoLoginService {
     user.nickname = nickname;
     user.profileImage = profileImage;
     user.kakao = kakao;
-    const entity = await this.userRepository.create(user);
+    const entity = this.userRepository.create(user);
     return this.userRepository.save(entity);
   }
 }
