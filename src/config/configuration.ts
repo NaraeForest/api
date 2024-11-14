@@ -19,10 +19,32 @@ const configuartion = () => ({
       password: process.env.DATABASE_WRITABLE_PASSWORD,
     },
   },
+  naver: {
+    clientId: process.env.NAVER_CLIENT_ID,
+    clientSecret: process.env.NAVER_CLIENT_SECRET,
+  },
+  kakao: {
+    clientId: process.env.KAKAO_CLIENT_ID,
+    clientSecret: process.env.KAKAO_CLIENT_SECRET,
+    redirectURL: process.env.KAKAO_REDIRECT_URL,
+  },
+  google: {
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    redirectURL: process.env.GOOGLE_REDIRECT_URL,
+  },
+  cookieSecret: process.env.COOKIE_SECRET,
+  csrfSecret: process.env.CSRF_SECRET,
+  jwt: {
+    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
+    refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
+    loginRedirectURL:  process.env.LOGIN_REDIRECT_URL,
+  },
 });
 
 export default ConfigModule.forRoot({
   load: [
     configuartion,
   ],
+  isGlobal: true,
 });

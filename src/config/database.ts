@@ -6,13 +6,24 @@ import {
   TypeOrmModule,
   TypeOrmModuleOptions,
 } from "@nestjs/typeorm";
+import {
+  User,
+  SocialKakao,
+  SocialNaver,
+  Auth,
+  SocialGoogle,
+} from "src/entities";
 
 const defaultDataSoruceOption: TypeOrmModuleOptions = {
   type: "postgres",
   database: "05-project",
   schema: "public",
   entities: [
-
+    User,
+    SocialKakao,
+    SocialNaver,
+    Auth,
+    SocialGoogle,
   ],
 };
 
