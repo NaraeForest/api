@@ -63,4 +63,13 @@ export class AuthService {
   public verifyRefreshToken(token: string) {
     return jwt.verify(token, this.configService.getOrThrow("jwt.refreshTokenSecret"));
   }
+
+  /**
+   * refreshtoken을 무효화 합니다.
+   * @param {number} userId 사용자 식별 번호
+   * @param {string} token refreshtoken
+   */
+  public async revokeToken(userId: number, token: string) {
+    return this.authRepository.delete({ refreshToken: token, user: { id: userId } })
+  }
 }
