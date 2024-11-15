@@ -10,16 +10,8 @@ import {
   SwaggerModule,
 } from '@nestjs/swagger';
 import {
-  doubleCsrf,
-} from 'csrf-csrf';
-import {
   AppModule,
 } from './app.module';
-import {
-  NextFunction,
-  Request,
-  Response,
-} from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -51,30 +43,8 @@ async function bootstrap() {
    * Gracefull Shutdown 활성화
    */
   app.enableShutdownHooks();
-  const {
-    invalidCsrfTokenError,
-    doubleCsrfProtection,
-  } = doubleCsrf({
-    getSecret: () => configService.getOrThrow("csrfSecret"),
-    cookieName: "x-csrf-token",
-    cookieOptions: {
-      sameSite: "lax",
-      path: "/",
-      secure: configService.get("isProduction"),
-    },
-    size: 64,
-    getTokenFromRequest: (req) => req.headers["x-csrf-token"],
-  });
-  const csrfErrorMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => {
-    if (error === invalidCsrfTokenError) {
-      return res.status(403).json({ error: "invalid csrf token" });
-    }
-    next();
-  };
   app
     .use(cookieParser(configService.getOrThrow("cookieSecret")))
-    .use(doubleCsrfProtection)
-    .use(csrfErrorMiddleware);
   const port = configService.get<number>("port");
   await app.listen(port);
 }
