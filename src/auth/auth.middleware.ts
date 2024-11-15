@@ -27,7 +27,7 @@ export class JwtMiddleware implements NestMiddleware {
     }
     try {
       const decode = await this.jwtService.verifyAsync(token);
-      req["sub"] = decode;
+      req["sub"] = decode.sub;
       next();
     } catch (e) {
       throw new HttpException("Token is invalid", HttpStatus.UNAUTHORIZED);

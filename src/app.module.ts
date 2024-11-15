@@ -1,8 +1,10 @@
 import Configuration from './config/configuration';
 import {
+  HttpStatus,
   MiddlewareConsumer,
   Module,
   NestModule,
+  RequestMethod,
 } from '@nestjs/common';
 import {
   ReadOnlyDataSource,
@@ -21,6 +23,17 @@ import {
 import {
   TerminusModule,
 } from '@nestjs/terminus';
+import {
+  ConfigService,
+} from '@nestjs/config';
+import {
+  doubleCsrf,
+} from 'csrf-csrf';
+import {
+  NextFunction,
+  Request,
+  Response,
+} from 'express';
 
 @Module({
   imports: [
@@ -41,9 +54,49 @@ import {
   providers: [],
 })
 export class AppModule implements NestModule {
+
+  constructor(
+    private readonly configService: ConfigService,
+  ) { }
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(JwtMiddleware)
       .forRoutes("*");
+    const {
+      invalidCsrfTokenError,
+      doubleCsrfProtection,
+    } = doubleCsrf({
+      getSecret: () => this.configService.getOrThrow("csrfSecret"),
+      cookieName: "x-csrf-token",
+      cookieOptions: {
+        sameSite: "lax",
+        path: "/",
+        secure: this.configService.get("isProduction"),
+      },
+      size: 64,
+      getTokenFromRequest: (req) => req.headers["x-csrf-token"],
+    });
+    const csrfErrorMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => {
+      if (error === invalidCsrfTokenError) {
+        return res
+          .status(HttpStatus.FORBIDDEN)
+          .json({ error: "Invalid csrf token" });
+      }
+      next();
+    };
+    consumer
+      .apply((req: Request, res: Response, next: NextFunction) => {
+        try {
+          doubleCsrfProtection(req, res, next);
+        } catch (e) {
+          csrfErrorMiddleware(e, req, res, next);
+        }
+      })
+      .forRoutes(
+        { path: "api/csrf/*", method: RequestMethod.ALL },
+        { path: "api/v1/auth/google/*", method: RequestMethod.ALL },
+        { path: "api/v1/auth/naver/*", method: RequestMethod.ALL },
+        { path: "api/v1/auth/kakao/*", method: RequestMethod.ALL },
+      );
   }
 }
