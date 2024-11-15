@@ -40,6 +40,10 @@ const configuartion = () => ({
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
     loginRedirectURL:  process.env.LOGIN_REDIRECT_URL,
   },
+  loki: {
+    host: process.env.LOKI_HOST,
+  },
+  podname: process.env.KUBENETES_PODNAME,
 });
 
 export default ConfigModule.forRoot({
