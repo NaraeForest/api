@@ -58,6 +58,7 @@ export class AppModule implements NestModule {
   constructor(
     private readonly configService: ConfigService,
   ) { }
+
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(JwtMiddleware)
