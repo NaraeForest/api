@@ -17,6 +17,9 @@ import {
 import {
   WinstonModule,
 } from 'nest-winston';
+import {
+  ValidationPipe,
+} from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -65,6 +68,7 @@ async function bootstrap() {
    * Gracefull Shutdown 활성화
    */
   app.enableShutdownHooks();
+  app.useGlobalPipes(new ValidationPipe());
   app
     .use(cookieParser(configService.getOrThrow("cookieSecret")));
   const port = configService.get<number>("port");
