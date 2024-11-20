@@ -37,6 +37,15 @@ export class GoalService {
           id: userId,
         },
       },
+      order: {
+        createdAt: "DESC",
+        subGoals: {
+          createdAt: "DESC",
+          tasks: {
+            createdAt: "ASC",
+          },
+        },
+      },
     });
     goals = goals.map((goal) => {
       const { totals, complete } = goal.subGoals.reduce((p, c) => {

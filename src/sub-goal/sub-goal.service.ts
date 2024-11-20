@@ -48,6 +48,11 @@ export class SubGoalService {
         },
         id: subGoalId,
       },
+      order: {
+        tasks: {
+          createdAt: "DESC",
+        },
+      },
     });
     const { complete, totals } = subGoal.tasks.reduce((p, c) => {
       if (c.complete) {

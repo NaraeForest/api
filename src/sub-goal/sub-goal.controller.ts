@@ -111,7 +111,7 @@ export class SubGoalController {
   ) {
     const result = await this.subGoalService.deleteTask(goalId, subGoalId, taskId, userId);
     return {
-      succes: result,
+      success: result,
     };
   }
 }
