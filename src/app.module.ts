@@ -47,7 +47,7 @@ import {
       /**
        * kubernetes의 gracefull shutdown 시간과 동일하게 설정
        */
-      gracefulShutdownTimeoutMs: 30000,
+      // gracefulShutdownTimeoutMs: 30000,
     }),
   ],
   controllers: [],

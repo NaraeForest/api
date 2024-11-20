@@ -8,7 +8,6 @@ import {
   InjectRepository,
 } from "@nestjs/typeorm";
 import {
-  SocialGoogle,
   User,
 } from "src/entities";
 import {
@@ -87,13 +86,13 @@ export class GoogleLoginService {
   }
 
   public async createUser(nickname: string, profileImage: string, socialId: string) {
-    const google = new SocialGoogle();
-    google.socialId = socialId;
-    const user = new User();
-    user.nickname = nickname;
-    user.profileImage = profileImage;
-    user.google = google;
-    const entity = this.userRepository.create(user);
-    return this.userRepository.save(entity);
+    const user = this.userRepository.create({
+      nickname,
+      profileImage,
+      google: {
+        socialId,
+      },
+    });
+    return this.userRepository.save(user);
   }
 }

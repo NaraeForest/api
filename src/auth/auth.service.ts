@@ -70,6 +70,7 @@ export class AuthService {
    * @param {string} token refreshtoken
    */
   public async revokeToken(userId: number, token: string) {
-    return this.authRepository.delete({ refreshToken: token, user: { id: userId } })
+    const result = await this.authRepository.delete({ refreshToken: token, user: { id: userId } });
+    return result.affected === 1;
   }
 }

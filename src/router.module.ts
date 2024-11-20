@@ -19,6 +19,15 @@ import {
 import {
   HealthModule,
 } from "./health/health.module";
+import {
+  GoalModule,
+} from "./goal/goal.module";
+import {
+  SubGoalModule,
+} from "./sub-goal/sub-goal.module";
+import {
+  UserModule,
+} from "./user/user.module";
 
 export const Routes = RouterModule.register([
   {
@@ -49,6 +58,20 @@ export const Routes = RouterModule.register([
               },
             ],
           },
+          {
+            path: "goals",
+            module: GoalModule,
+            children: [
+              {
+                path: ":goal_id/sub-goals",
+                module: SubGoalModule,
+              },
+            ]
+          },
+          {
+            path: "users",
+            module: UserModule,
+          },
         ],
       },
     ],
@@ -66,4 +89,7 @@ export const RegisteredModules = [
   GoogleLoginModule,
   AuthModule,
   HealthModule,
+  GoalModule,
+  SubGoalModule,
+  UserModule,
 ];

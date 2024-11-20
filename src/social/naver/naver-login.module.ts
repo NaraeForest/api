@@ -11,9 +11,16 @@ import {
   ConfigModule,
   ConfigService,
 } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { SocialNaver, User } from "src/entities";
-import { AuthModule } from "src/auth/auth.module";
+import {
+  TypeOrmModule,
+} from "@nestjs/typeorm";
+import {
+  SocialNaver,
+  User,
+} from "src/entities";
+import {
+  AuthModule,
+} from "src/auth/auth.module";
 
 @Module({
   imports: [
