@@ -21,6 +21,9 @@ import {
   ConfigModule,
   ConfigService,
 } from "@nestjs/config";
+import {
+  UserModule,
+} from "src/user/user.module";
 
 export const AuthFactory = JwtModule.registerAsync({
   imports: [
@@ -40,8 +43,9 @@ export const AuthFactory = JwtModule.registerAsync({
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([Auth], "writable"),
+    TypeOrmModule.forFeature([Auth, User], "writable"),
     AuthFactory,
+    UserModule,
   ],
   controllers: [
     AuthController,

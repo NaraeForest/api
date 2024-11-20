@@ -18,6 +18,9 @@ export class CSRFController {
     @Res() res: Response,
   ) {
     const token = req.csrfToken();
-    return res.json({ token });
+    return res.json({
+      success: true,
+      token,
+    });
   }
 }

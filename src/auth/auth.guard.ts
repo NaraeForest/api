@@ -3,6 +3,7 @@ import {
   createParamDecorator,
   ExecutionContext,
   Injectable,
+  UnauthorizedException,
 } from "@nestjs/common";
 import {
   Request,
@@ -13,6 +14,9 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
+    if (request["sub"] == null) {
+      throw new UnauthorizedException("Token is invalid");
+    }
     return request["sub"] != null;
   }
 }

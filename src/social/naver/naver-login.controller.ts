@@ -39,11 +39,14 @@ export class NaverLoginController {
     @Res() res: Response,
   ) {
     if (req.csrfToken() !== state) {
-      return res.status(HttpStatus.FORBIDDEN).json({ error: "Invalid csrf token" });
+      return res
+        .status(HttpStatus.FORBIDDEN)
+        .json({ error: "Invalid csrf token" });
     }
     if (error != null) {
-      console.error(error, errorDescription);
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: "Internal server error" });
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ error: "Internal server error" });
     }
     const token = await this.loginService.requestAccessToken(code, state);
     const profile = await this.loginService.requestProfile(token.accessToken);

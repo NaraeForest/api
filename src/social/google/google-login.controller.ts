@@ -40,11 +40,12 @@ export class GoogleLoginController {
     @Res() res: Response,
   ) {
     if (req.csrfToken() !== state) {
-      return res.status(HttpStatus.FORBIDDEN).json({ error: "Invalid csrf token" });
+      return res
+        .status(HttpStatus.FORBIDDEN)
+        .json({ error: "Invalid csrf token" });
     }
     const token = await this.loginService.requestAccessToken(code);
     const profile = await this.loginService.requestProfile(token.accessToken);
-    console.log(profile);
     let user = await this.loginService.findOneBySocialId(profile.id);
     if (user == null) {
       user = await this.loginService.createUser(profile.name, profile.picture, profile.id);

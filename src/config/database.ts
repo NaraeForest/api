@@ -12,6 +12,9 @@ import {
   SocialNaver,
   Auth,
   SocialGoogle,
+  Goal,
+  SubGoal,
+  Task,
 } from "src/entities";
 
 const defaultDataSoruceOption: TypeOrmModuleOptions = {
@@ -24,6 +27,9 @@ const defaultDataSoruceOption: TypeOrmModuleOptions = {
     SocialNaver,
     Auth,
     SocialGoogle,
+    Goal,
+    SubGoal,
+    Task,
   ],
 };
 
@@ -72,5 +78,6 @@ export const WritableDataSource = TypeOrmModule.forRootAsync({
     username: configService.getOrThrow("database.writable.username"),
     password: configService.getOrThrow("database.writable.password"),
     synchronize: !configService.getOrThrow("isProduction"),
+    logging: !configService.getOrThrow("isProduction"),
   }),
 });

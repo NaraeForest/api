@@ -4,9 +4,15 @@ import {
 import {
   ConfigService,
 } from "@nestjs/config";
-import { InjectRepository } from "@nestjs/typeorm";
-import { SocialKakao, User } from "src/entities";
-import { Repository } from "typeorm";
+import {
+  InjectRepository,
+} from "@nestjs/typeorm";
+import {
+  User,
+} from "src/entities";
+import {
+  Repository,
+} from "typeorm";
 
 @Injectable()
 export class KakaoLoginService {
@@ -70,7 +76,7 @@ export class KakaoLoginService {
         profileNicknameNeedsAgreement: data.kakao_account.profile_nickname_needs_agreement,
         profileImageNeedsAgreement: data.kakao_account.profile_image_needs_agreement,
         profile: {
-          nickname: '#',
+          nickname: data.kakao_account.profile.nickname,
           thumbnailImageUrl: data.kakao_account.profile.thumbnail_image_url,
           profile_image_url: data.kakao_account.profile.profile_image_url,
           isDefaultImage: data.kakao_account.profile.is_default_image,
@@ -93,13 +99,13 @@ export class KakaoLoginService {
   }
 
   public async createUser(nickname: string, profileImage: string, socialId: number) {
-    const kakao = new SocialKakao();
-    kakao.socialId = socialId;
-    const user = new User();
-    user.nickname = nickname;
-    user.profileImage = profileImage;
-    user.kakao = kakao;
-    const entity = this.userRepository.create(user);
-    return this.userRepository.save(entity);
+    const user = this.userRepository.create({
+      nickname,
+      profileImage,
+      kakao: {
+        socialId,
+      },
+    });
+    return this.userRepository.save(user);
   }
 }

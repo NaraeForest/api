@@ -80,13 +80,13 @@ export class NaverLoginService {
   }
 
   public async createUser(nickname: string, profileImage: string, socialId: string) {
-    const naver = new SocialNaver();
-    naver.socialId = socialId;
-    const user = new User();
-    user.nickname = nickname;
-    user.profileImage = profileImage;
-    user.naver = naver;
-    const entity = this.userRepository.create(user);
-    return this.userRepository.save(entity);
+    const user = this.userRepository.create({
+      nickname,
+      profileImage,
+      naver: {
+        socialId,
+      },
+    });
+    return this.userRepository.save(user);
   }
 }
