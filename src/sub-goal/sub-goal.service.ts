@@ -65,9 +65,32 @@ export class SubGoalService {
 
   public async updateSubGoal(goalId: number, subGoalId: number, userId: number, name: string) {
     const result = await this.subGoalRepository.update(
-      { id: subGoalId, goal: { id: goalId, user: { id: userId } } },
-      { name },
+      {
+        id: subGoalId,
+        goal: {
+          id: goalId,
+          user: {
+            id: userId,
+          },
+        },
+      },
+      {
+        name,
+      },
     );
+    return result.affected === 1;
+  }
+
+  public async deleteSubGoal(goalId: number, subGoalId: number, userId: number) {
+    const result = await this.subGoalRepository.delete({
+      id: subGoalId,
+      goal: {
+        id: goalId,
+        user: {
+          id: userId,
+        },
+      },
+    });
     return result.affected === 1;
   }
 
@@ -89,8 +112,21 @@ export class SubGoalService {
 
   public async changeTaskComplete(goalId: number, subGoalId: number, taskId: number, userId: number, complete: boolean) {
     const result = await this.taskRepository.update(
-      { id: taskId, subGoal: { id: subGoalId, goal: { id: goalId, user: { id: userId, } } } },
-      { complete },
+      {
+        id: taskId,
+        subGoal: {
+          id: subGoalId,
+          goal: {
+            id: goalId,
+            user: {
+              id: userId,
+            },
+          },
+        },
+      },
+      {
+        complete,
+      },
     );
     return result.affected === 1;
   }

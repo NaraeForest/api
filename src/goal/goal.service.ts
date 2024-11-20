@@ -98,4 +98,14 @@ export class GoalService {
     );
     return result.affected === 1;
   }
+
+  public async deleteGoal(goalId: number, userId: number) {
+    const result = await this.goalRepository.delete({
+      id: goalId,
+      user: {
+        id: userId,
+      },
+    });
+    return result.affected === 1;
+  }
 }

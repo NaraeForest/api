@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -64,11 +65,23 @@ export class GoalController {
   @UseGuards(AuthGuard)
   @Patch(":goal_id")
   public async updateGoal(
-    @Param("goal_id", new ParseIntPipe()) goalId: number,
     @UserAuth() userId: number,
+    @Param("goal_id", new ParseIntPipe()) goalId: number,
     @Body() body: SetupGoalDTO,
   ) {
     const result = await this.goalService.updateGoal(userId, goalId, body.name, body.category);
+    return {
+      success: result,
+    };
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete(":goal_id")
+  public async deleteGoal(
+    @UserAuth() userId: number,
+    @Param("goal_id", new ParseIntPipe()) goalId: number,
+  ) {
+    const result = await this.goalService.deleteGoal(goalId, userId);
     return {
       success: result,
     };
