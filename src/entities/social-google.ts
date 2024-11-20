@@ -12,7 +12,7 @@ import {
 } from "./user";
 
 @Entity({
-  name: "social-google"
+  name: "social_google"
 })
 export class SocialGoogle extends DefaultEntity {
 

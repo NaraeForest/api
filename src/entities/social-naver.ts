@@ -12,7 +12,7 @@ import {
 } from "./user";
 
 @Entity({
-  name: "social-naver"
+  name: "social_naver"
 })
 export class SocialNaver extends DefaultEntity {
 

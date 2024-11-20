@@ -12,7 +12,7 @@ import {
 } from "./user";
 
 @Entity({
-  name: "social-kakao"
+  name: "social_kakao"
 })
 export class SocialKakao extends DefaultEntity {
 
