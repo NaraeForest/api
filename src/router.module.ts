@@ -28,6 +28,9 @@ import {
 import {
   UserModule,
 } from "./user/user.module";
+import {
+  S3Module,
+} from "./s3/s3.module";
 
 export const Routes = RouterModule.register([
   {
@@ -72,6 +75,10 @@ export const Routes = RouterModule.register([
             path: "users",
             module: UserModule,
           },
+          {
+            path: "s3",
+            module: S3Module,
+          },
         ],
       },
     ],
@@ -92,4 +99,5 @@ export const RegisteredModules = [
   GoalModule,
   SubGoalModule,
   UserModule,
+  S3Module,
 ];

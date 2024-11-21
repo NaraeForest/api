@@ -43,6 +43,9 @@ const configuartion = () => ({
   loki: {
     host: process.env.LOKI_HOST,
   },
+  aws: {
+    mediaBucket: process.env.AWS_S3_MEDIA_BUCKET,
+  },
   podname: process.env.KUBENETES_PODNAME,
 });
 
