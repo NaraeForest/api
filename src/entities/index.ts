@@ -6,3 +6,5 @@ export * from "./social-google";
 export * from "./goal";
 export * from "./sub-goal";
 export * from "./task";
+export * from "./feed";
+export * from "./feed-like";

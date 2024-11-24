@@ -29,6 +29,9 @@ import {
   UserModule,
 } from "./user/user.module";
 import {
+  FeedModule,
+} from "./feed/feed.module";
+import {
   S3Module,
 } from "./s3/s3.module";
 
@@ -76,6 +79,10 @@ export const Routes = RouterModule.register([
             module: UserModule,
           },
           {
+            path: "feeds",
+            module: FeedModule,
+          },
+          {
             path: "s3",
             module: S3Module,
           },
@@ -99,5 +106,6 @@ export const RegisteredModules = [
   GoalModule,
   SubGoalModule,
   UserModule,
+  FeedModule,
   S3Module,
 ];
