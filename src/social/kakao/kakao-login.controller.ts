@@ -19,6 +19,9 @@ import {
 import {
   ConfigService,
 } from "@nestjs/config";
+import {
+  S3Service,
+} from "src/s3/s3.service";
 
 @Controller()
 export class KakaoLoginController {
@@ -27,6 +30,7 @@ export class KakaoLoginController {
     private readonly loginService: KakaoLoginService,
     private readonly authService: AuthService,
     private readonly configService: ConfigService,
+    private readonly s3Service: S3Service,
   ) { }
 
   @Get("callback")
@@ -50,6 +54,9 @@ export class KakaoLoginController {
     }
     const token = await this.loginService.requestAccessToken(code);
     const profile = await this.loginService.requestProfile(token.accessToken);
+    const profileImage = await this.loginService.getProfileImage(profile.properties.profileImage);
+    const key = this.s3Service.generateKey(profile.properties.profileImage.split(".").pop() || "blob");
+    profile.properties.profileImage = await this.s3Service.upload(key, profileImage);
     let user = await this.loginService.findOneBySocialId(profile.id);
     if (user == null) {
       user = await this.loginService.createUser(profile.properties.nickname, profile.properties.profileImage, profile.id);
