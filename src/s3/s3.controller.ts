@@ -21,7 +21,8 @@ export class S3Controller {
   public async getPresignedUrl(
     @Body() body: CreatePreSignedURLDTO,
   ) {
-    const url = await this.s3Service.getPresignedUrl(body.key);
+    const key = this.s3Service.generateKey(body.extension);
+    const url = await this.s3Service.getPresignedUrl(key);
     return {
       success: true,
       data: url,

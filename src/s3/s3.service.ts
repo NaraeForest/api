@@ -11,6 +11,9 @@ import {
 import {
   ConfigService,
 } from "@nestjs/config";
+import {
+  v4 as UUID,
+} from "uuid";
 
 @Injectable()
 export class S3Service {
@@ -27,9 +30,29 @@ export class S3Service {
   public async getPresignedUrl(key: string) {
     const command = new PutObjectCommand({
       Bucket: this.configService.getOrThrow("aws.mediaBucket"),
-      Key: "test.png",
+      Key: key,
     });
     const presignedUrl = await getSignedUrl(this.s3Client, command, { expiresIn: 3600 });
-    return presignedUrl
+    return {
+      url: presignedUrl,
+      key: `${this.configService.getOrThrow("aws.cdnURL")}/${key}`,
+    };
+  }
+
+  public generateKey(extension: string) {
+    return `${UUID()}.${extension}`;
+  }
+
+  public async upload(key: string, file: ArrayBuffer) {
+    const command = new PutObjectCommand({
+      Bucket: this.configService.getOrThrow("aws.mediaBucket"),
+      Key: key,
+      Body: Buffer.from(file),
+    });
+    const result = await this.s3Client.send(command);
+    if (result.$metadata.httpStatusCode !== 200) {
+      throw new Error("fail to upload");
+    }
+    return `https://cdn.05-project.narumir.io/${key}`;
   }
 }
