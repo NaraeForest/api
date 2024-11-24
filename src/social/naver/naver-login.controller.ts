@@ -19,6 +19,9 @@ import {
 import {
   AuthService,
 } from "src/auth/auth.service";
+import {
+  S3Service,
+} from "src/s3/s3.service";
 
 @Controller()
 export class NaverLoginController {
@@ -27,6 +30,7 @@ export class NaverLoginController {
     private readonly loginService: NaverLoginService,
     private readonly authService: AuthService,
     private readonly configService: ConfigService,
+    private readonly s3Service: S3Service,
   ) { }
 
   @Get("callback")
@@ -50,6 +54,9 @@ export class NaverLoginController {
     }
     const token = await this.loginService.requestAccessToken(code, state);
     const profile = await this.loginService.requestProfile(token.accessToken);
+    const profileImage = await this.loginService.getProfileImage(profile.response.profileImage);
+    const key = this.s3Service.generateKey(profile.response.profileImage.split(".").pop() || "blob");
+    profile.response.profileImage = await this.s3Service.upload(key, profileImage);
     let user = await this.loginService.findOneBySocialId(profile.response.id);
     if (user == null) {
       user = await this.loginService.createUser(profile.response.nickname, profile.response.profileImage, profile.response.id);
