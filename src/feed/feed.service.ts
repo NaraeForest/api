@@ -157,4 +157,29 @@ export class FeedService {
     });
     return feeds;
   }
+
+  public async getUserFeeds(userId: number, startFeedId?: number) {
+    const feeds = await this.feedRepository.find({
+      relations: [
+        "user",
+        "likes",
+        "likes.user",
+        "childs",
+        "childs.childs",
+      ],
+      where: {
+        ...(startFeedId != null && {
+          id: LessThan(startFeedId),
+        }),
+        user: {
+          id: userId,
+        },
+      },
+      order: {
+        id: "DESC",
+      },
+      take: 3,
+    });
+    return feeds;
+  }
 }

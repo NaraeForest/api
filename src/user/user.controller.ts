@@ -5,6 +5,7 @@ import {
   Param,
   ParseIntPipe,
   Patch,
+  Query,
   UseGuards,
 } from "@nestjs/common";
 import {
@@ -17,12 +18,16 @@ import {
 import {
   UpdateProfileDTO,
 } from "./dto";
+import {
+  FeedService,
+} from "src/feed/feed.service";
 
 @Controller()
 export class UserController {
 
   constructor(
     private readonly userService: UserService,
+    private readonly feedService: FeedService,
   ) { }
 
   @UseGuards(AuthGuard)
@@ -57,6 +62,18 @@ export class UserController {
     return {
       success: true,
       data: user,
+    };
+  }
+
+  @Get(":user_id/feeds")
+  public async getMyFeeds(
+    @Param("user_id", new ParseIntPipe()) userId: number,
+    @Query("startFeedId", new ParseIntPipe({ optional: true })) startFeedId: number,
+  ) {
+    const feeds = await this.feedService.getUserFeeds(userId, startFeedId);
+    return {
+      success: true,
+      data: feeds,
     };
   }
 }

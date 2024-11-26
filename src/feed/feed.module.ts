@@ -25,5 +25,8 @@ import {
   providers: [
     FeedService,
   ],
+  exports: [
+    FeedService,
+  ]
 })
 export class FeedModule { }

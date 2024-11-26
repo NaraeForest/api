@@ -13,10 +13,14 @@ import {
 import {
   User,
 } from "src/entities";
+import {
+  FeedModule,
+} from "src/feed/feed.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User], "writable"),
+    FeedModule,
   ],
   controllers: [
     UserController,
