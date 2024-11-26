@@ -38,10 +38,14 @@ const configuartion = () => ({
   jwt: {
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
-    loginRedirectURL:  process.env.LOGIN_REDIRECT_URL,
+    loginRedirectURL: process.env.LOGIN_REDIRECT_URL,
   },
   loki: {
     host: process.env.LOKI_HOST,
+  },
+  aws: {
+    mediaBucket: process.env.AWS_S3_MEDIA_BUCKET,
+    cdnURL: process.env.AWS_CDN_URL,
   },
   podname: process.env.KUBENETES_PODNAME,
 });

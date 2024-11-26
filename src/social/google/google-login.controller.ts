@@ -19,6 +19,9 @@ import {
 import {
   ConfigService,
 } from "@nestjs/config";
+import {
+  S3Service,
+} from "src/s3/s3.service";
 
 @Controller()
 export class GoogleLoginController {
@@ -27,6 +30,7 @@ export class GoogleLoginController {
     private readonly loginService: GoogleLoginService,
     private readonly authService: AuthService,
     private readonly configService: ConfigService,
+    private readonly s3Service: S3Service,
   ) { }
 
   @Get("callback")
@@ -46,6 +50,9 @@ export class GoogleLoginController {
     }
     const token = await this.loginService.requestAccessToken(code);
     const profile = await this.loginService.requestProfile(token.accessToken);
+    const profileImage = await this.loginService.getProfileImage(profile.picture);
+    const key = this.s3Service.generateKey(profile.picture.split(".").pop() || "blob");
+    profile.picture = await this.s3Service.upload(key, profileImage);
     let user = await this.loginService.findOneBySocialId(profile.id);
     if (user == null) {
       user = await this.loginService.createUser(profile.name, profile.picture, profile.id);

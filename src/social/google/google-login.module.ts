@@ -20,12 +20,16 @@ import {
 import {
   AuthModule,
 } from "src/auth/auth.module";
+import {
+  S3Module,
+} from "src/s3/s3.module";
 
 @Module({
   imports: [
     ConfigModule,
     TypeOrmModule.forFeature([SocialGoogle, User], "writable"),
     AuthModule,
+    S3Module,
   ],
   controllers: [
     GoogleLoginController,

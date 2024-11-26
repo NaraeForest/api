@@ -24,6 +24,7 @@ import {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  const { Console } = winston.transports;
   const instance = winston.createLogger({
     format: winston.format.json(),
     transports: [
@@ -34,7 +35,8 @@ async function bootstrap() {
           pod: configService.get("podname"),
         },
         json: true,
-      })
+      }),
+      new Console(),
     ],
   });
   const logger = WinstonModule.createLogger({

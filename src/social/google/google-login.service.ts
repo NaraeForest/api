@@ -95,4 +95,10 @@ export class GoogleLoginService {
     });
     return this.userRepository.save(user);
   }
+
+  public async getProfileImage(url: string) {
+    const res = await fetch(url);
+    const imageBuffer = await res.arrayBuffer();
+    return imageBuffer;
+  }
 }

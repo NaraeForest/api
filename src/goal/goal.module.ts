@@ -24,5 +24,8 @@ import {
   providers: [
     GoalService,
   ],
+  exports: [
+    GoalService,
+  ],
 })
 export class GoalModule { }

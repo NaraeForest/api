@@ -15,6 +15,8 @@ import {
   Goal,
   SubGoal,
   Task,
+  Feed,
+  FeedLike,
 } from "src/entities";
 
 const defaultDataSoruceOption: TypeOrmModuleOptions = {
@@ -30,6 +32,8 @@ const defaultDataSoruceOption: TypeOrmModuleOptions = {
     Goal,
     SubGoal,
     Task,
+    Feed,
+    FeedLike,
   ],
 };
 
