@@ -21,6 +21,9 @@ import {
 import {
   FeedService,
 } from "src/feed/feed.service";
+import {
+  GoalService,
+} from "src/goal/goal.service";
 
 @Controller()
 export class UserController {
@@ -28,6 +31,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly feedService: FeedService,
+    private readonly goalService: GoalService,
   ) { }
 
   @UseGuards(AuthGuard)
@@ -74,6 +78,17 @@ export class UserController {
     return {
       success: true,
       data: feeds,
+    };
+  }
+
+  @Get(":user_id/goals")
+  public async getUserGoals(
+    @Param("user_id", new ParseIntPipe()) userId: number,
+  ) {
+    const goals = await this.goalService.getUserGoals(userId);
+    return {
+      success: true,
+      data: goals,
     };
   }
 }

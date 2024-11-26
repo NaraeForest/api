@@ -16,11 +16,15 @@ import {
 import {
   FeedModule,
 } from "src/feed/feed.module";
+import {
+  GoalModule,
+} from "src/goal/goal.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User], "writable"),
     FeedModule,
+    GoalModule,
   ],
   controllers: [
     UserController,

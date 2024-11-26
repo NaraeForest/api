@@ -41,7 +41,7 @@ export class SubGoalService {
 
   public async getSubGoal(goalId: number, subGoalId: number) {
     const subGoal = await this.subGoalRepository.findOne({
-      relations: ["goal", "tasks"],
+      relations: ["goal", "tasks", "goal.user"],
       where: {
         goal: {
           id: goalId,
