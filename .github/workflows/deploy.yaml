@@ -32,6 +32,7 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set up version tag
         id: version
         run: |
@@ -39,19 +40,18 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "::set-output name=VERSION::$VERSION"
 
-      - name: Extract meta data
-        uses: docker/metadata-action@v5
-        id: meta
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=semver,pattern={{version}}
-      
-      - name: Build and publish container image
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            ghcr.io/05-project/05-project-server:latest
+            ghcr.io/05-project/05-project-server:${{ steps.version.outputs.VERSION }}
