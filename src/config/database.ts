@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import {
   ConfigModule,
   ConfigService,
@@ -60,7 +62,7 @@ export const ReadOnlyDataSource = TypeOrmModule.forRootAsync({
     synchronize: false,
     ...(process.env.NODE_ENV === "production" && {
       ssl: {
-        ca: configService.getOrThrow("aws.rdsPrivateKey"),
+        ca: fs.readFileSync(path.resolve(process.cwd(), "./ap-northeast-2-bundle.pem")),
       },
     }),
   }),
@@ -90,7 +92,7 @@ export const WritableDataSource = TypeOrmModule.forRootAsync({
     logging: !configService.getOrThrow("isProduction"),
     ...(process.env.NODE_ENV === "production" && {
       ssl: {
-        ca: configService.getOrThrow("aws.rdsPrivateKey"),
+        ca: fs.readFileSync(path.resolve(process.cwd(), "./ap-northeast-2-bundle.pem")),
       },
     }),
   }),
