@@ -58,6 +58,11 @@ export const ReadOnlyDataSource = TypeOrmModule.forRootAsync({
     username: configService.getOrThrow("database.readonly.username"),
     password: configService.getOrThrow("database.readonly.password"),
     synchronize: false,
+    ...(process.env.NODE_ENV === "production" && {
+      ssl: {
+        ca: configService.getOrThrow("aws.rdsPrivateKey"),
+      },
+    }),
   }),
 });
 
@@ -83,5 +88,10 @@ export const WritableDataSource = TypeOrmModule.forRootAsync({
     password: configService.getOrThrow("database.writable.password"),
     synchronize: !configService.getOrThrow("isProduction"),
     logging: !configService.getOrThrow("isProduction"),
+    ...(process.env.NODE_ENV === "production" && {
+      ssl: {
+        ca: configService.getOrThrow("aws.rdsPrivateKey"),
+      },
+    }),
   }),
 });

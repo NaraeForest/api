@@ -46,6 +46,7 @@ const configuartion = () => ({
   aws: {
     mediaBucket: process.env.AWS_S3_MEDIA_BUCKET,
     cdnURL: process.env.AWS_CDN_URL,
+    rdsPrivateKey: process.env.AWS_RDS_PRIVATE_KEY,
   },
   podname: process.env.KUBENETES_PODNAME,
 });
