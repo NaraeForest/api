@@ -1,5 +1,8 @@
 import {
+  HttpException,
+  HttpStatus,
   Injectable,
+  Logger,
 } from "@nestjs/common";
 import {
   ConfigService,
@@ -21,6 +24,7 @@ export class KakaoLoginService {
     private readonly configService: ConfigService,
     @InjectRepository(User, "writable")
     private readonly userRepository: Repository<User>,
+    private readonly logger: Logger,
   ) { }
 
   public async requestAccessToken(code: string) {
@@ -43,7 +47,8 @@ export class KakaoLoginService {
     const res = await fetch(`https://kauth.kakao.com/oauth/token`, init);
     const data = await res.json();
     if (data.error != null) {
-      // TODO: 에러처리
+      this.logger.error(data.error, data.error_description);
+      throw new HttpException("InternalError", HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return {
       accessToken: data.access_token,
@@ -64,6 +69,11 @@ export class KakaoLoginService {
     };
     const res = await fetch("https://kapi.kakao.com/v2/user/me", init);
     const data = await res.json();
+    if (data.error != null) {
+      console.log(data);
+      this.logger.error(data.error, data.error_description);
+      throw new HttpException("InternalError", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     return {
       id: data.id,
       connectedAt: data.connected_at,
