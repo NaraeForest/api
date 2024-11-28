@@ -1,4 +1,5 @@
 import {
+  Logger,
   Module,
 } from "@nestjs/common";
 import {
@@ -36,6 +37,7 @@ import {
   ],
   providers: [
     KakaoLoginService,
+    Logger,
   ],
 })
 export class KakaoLoginModule { }
