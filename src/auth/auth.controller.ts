@@ -66,7 +66,7 @@ export class AuthController {
       const accessTokenExpireDate = this.authService.getExpireDate(accessToken);
       return res
         .cookie("access-token", accessToken, { expires: accessTokenExpireDate, httpOnly: true })
-        .json({ success: true });
+        .json({ success: true, data: { accessToken } });
     } catch (e) {
       return res
         .status(HttpStatus.UNAUTHORIZED)
