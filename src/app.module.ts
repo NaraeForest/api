@@ -7,8 +7,7 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import {
-  ReadOnlyDataSource,
-  WritableDataSource,
+  PostgresDataSource,
 } from './config/database';
 import {
   RegisteredModules,
@@ -38,8 +37,7 @@ import {
 @Module({
   imports: [
     Configuration,
-    WritableDataSource,
-    ReadOnlyDataSource,
+    PostgresDataSource,
     Routes,
     AuthFactory,
     ...RegisteredModules,

@@ -19,11 +19,11 @@ import {
 export class FeedService {
 
   constructor(
-    @InjectRepository(Feed, "writable")
+    @InjectRepository(Feed, "postgres")
     private readonly feedRepository: Repository<Feed>,
-    @InjectRepository(FeedLike, "writable")
+    @InjectRepository(FeedLike, "postgres")
     private readonly likeRepository: Repository<FeedLike>,
-    @InjectDataSource("writable")
+    @InjectDataSource("postgres")
     private readonly datasource: DataSource,
   ) { }
 
@@ -110,6 +110,9 @@ export class FeedService {
         "subGoal.goal",
         "parent",
         "parent.user",
+        "parent.likes",
+        "parent.likes.user",
+        "parent.childs",
         "childs",
         "user",
         "likes",
@@ -181,5 +184,15 @@ export class FeedService {
       take: 3,
     });
     return feeds;
+  }
+
+  public async deleteFeed(feedId: number, userId: number) {
+    const result = await this.feedRepository.delete({
+      id: feedId,
+      user: {
+        id: userId,
+      },
+    });
+    return result.affected === 1;
   }
 }

@@ -22,7 +22,7 @@ import {
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User], "writable"),
+    TypeOrmModule.forFeature([User], "postgres"),
     FeedModule,
     GoalModule,
   ],

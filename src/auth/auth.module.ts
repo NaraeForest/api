@@ -43,7 +43,7 @@ export const AuthFactory = JwtModule.registerAsync({
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([Auth, User], "writable"),
+    TypeOrmModule.forFeature([Auth, User], "postgres"),
     AuthFactory,
     UserModule,
   ],

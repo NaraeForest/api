@@ -20,18 +20,15 @@ export class HealthController {
   constructor(
     private readonly healthCheckService: HealthCheckService,
     private readonly db: TypeOrmHealthIndicator,
-    @InjectDataSource("writable")
+    @InjectDataSource("postgres")
     private readonly wriableDataSource: DataSource,
-    @InjectDataSource("readonly")
-    private readonly readonlyDataSoruce: DataSource,
   ) { }
 
   @HealthCheck()
   @Get()
   public check() {
     return this.healthCheckService.check([
-      () => this.db.pingCheck("writable", { connection: this.wriableDataSource }),
-      () => this.db.pingCheck("readonly", { connection: this.readonlyDataSoruce }),
+      () => this.db.pingCheck("postgres", { connection: this.wriableDataSource }),
     ]);
   }
 }

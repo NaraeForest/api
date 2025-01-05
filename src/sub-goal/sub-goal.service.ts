@@ -17,11 +17,11 @@ import {
 @Injectable()
 export class SubGoalService {
   constructor(
-    @InjectRepository(Goal, "writable")
+    @InjectRepository(Goal, "postgres")
     private readonly goalRepository: Repository<Goal>,
-    @InjectRepository(SubGoal, "writable")
+    @InjectRepository(SubGoal, "postgres")
     private readonly subGoalRepository: Repository<SubGoal>,
-    @InjectRepository(Task, "writable")
+    @InjectRepository(Task, "postgres")
     private readonly taskRepository: Repository<Task>,
   ) { }
 

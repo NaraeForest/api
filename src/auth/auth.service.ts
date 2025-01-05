@@ -23,7 +23,7 @@ import {
 export class AuthService {
 
   constructor(
-    @InjectRepository(Auth, "writable")
+    @InjectRepository(Auth, "postgres")
     private readonly authRepository: Repository<Auth>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,

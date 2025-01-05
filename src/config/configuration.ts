@@ -6,18 +6,10 @@ const configuartion = () => ({
   port: parseInt(process.env.PORT || "4000", 10),
   isProduction: process.env.NODE_ENV === "production",
   database: {
-    readonly: {
-      host: process.env.DATABASE_READONLY_HOST,
-      port: parseInt(process.env.DATABASE_READONLY_PORT || "5432", 10),
-      username: process.env.DATABASE_READONLY_USERNAME,
-      password: process.env.DATABASE_READONLY_PASSWORD,
-    },
-    writable: {
-      host: process.env.DATABASE_WRITABLE_HOST,
-      port: parseInt(process.env.DATABASE_WRITABLE_PORT || "5432", 10),
-      username: process.env.DATABASE_WRITABLE_USERNAME,
-      password: process.env.DATABASE_WRITABLE_PASSWORD,
-    },
+    host: process.env.DATABASE_HOST,
+    port: parseInt(process.env.DATABASE_PORT || "5432", 10),
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
   },
   naver: {
     clientId: process.env.NAVER_CLIENT_ID,

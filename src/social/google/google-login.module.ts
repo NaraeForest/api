@@ -27,7 +27,7 @@ import {
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([SocialGoogle, User], "writable"),
+    TypeOrmModule.forFeature([SocialGoogle, User], "postgres"),
     AuthModule,
     S3Module,
   ],

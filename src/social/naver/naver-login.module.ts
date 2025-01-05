@@ -28,7 +28,7 @@ import {
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([SocialNaver, User], "writable"),
+    TypeOrmModule.forFeature([SocialNaver, User], "postgres"),
     AuthModule,
     S3Module,
   ],

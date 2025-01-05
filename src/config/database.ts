@@ -39,8 +39,8 @@ const defaultDataSoruceOption: TypeOrmModuleOptions = {
   ],
 };
 
-export const ReadOnlyDataSource = TypeOrmModule.forRootAsync({
-  name: "readonly",
+export const PostgresDataSource = TypeOrmModule.forRootAsync({
+  name: "postgres",
   imports: [
     ConfigModule,
   ],
@@ -54,40 +54,11 @@ export const ReadOnlyDataSource = TypeOrmModule.forRootAsync({
      * 따라서 위의 name과 useFactory의 name과 일치해야 한다.
      * 다르면 graceful shutdown이 되지 않고 오류가 발생한다.
      */
-    name: "readonly",
-    host: configService.getOrThrow("database.readonly.host"),
-    port: configService.getOrThrow("database.readonly.port"),
-    username: configService.getOrThrow("database.readonly.username"),
-    password: configService.getOrThrow("database.readonly.password"),
-    synchronize: false,
-    ...(process.env.NODE_ENV === "production" && {
-      ssl: {
-        ca: fs.readFileSync(path.resolve(process.cwd(), "./certificates/ap-northeast-2-bundle.pem")),
-      },
-    }),
-  }),
-});
-
-export const WritableDataSource = TypeOrmModule.forRootAsync({
-  name: "writable",
-  imports: [
-    ConfigModule,
-  ],
-  inject: [
-    ConfigService,
-  ],
-  useFactory: (configService: ConfigService) => ({
-    ...defaultDataSoruceOption,
-    /**
-     * 해당 name은 nest에서 graceful shutdown이 발생 했을 때, typeorm 모듈에서 DataSource를 찾는 용도의 이름이다.
-     * 따라서 위의 name과 useFactory의 name과 일치해야 한다.
-     * 다르면 graceful shutdown이 되지 않고 오류가 발생한다.
-     */
-    name: "writable",
-    host: configService.getOrThrow("database.writable.host"),
-    port: configService.getOrThrow("database.writable.port"),
-    username: configService.getOrThrow("database.writable.username"),
-    password: configService.getOrThrow("database.writable.password"),
+    name: "postgres",
+    host: configService.getOrThrow("database.host"),
+    port: configService.getOrThrow("database.port"),
+    username: configService.getOrThrow("database.username"),
+    password: configService.getOrThrow("database.password"),
     synchronize: !configService.getOrThrow("isProduction"),
     logging: !configService.getOrThrow("isProduction"),
     ...(process.env.NODE_ENV === "production" && {

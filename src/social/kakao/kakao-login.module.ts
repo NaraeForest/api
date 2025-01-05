@@ -28,7 +28,7 @@ import {
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([SocialKakao, User], "writable"),
+    TypeOrmModule.forFeature([SocialKakao, User], "postgres"),
     AuthModule,
     S3Module,
   ],

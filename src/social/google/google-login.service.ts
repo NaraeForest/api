@@ -19,7 +19,7 @@ export class GoogleLoginService {
 
   constructor(
     private readonly configService: ConfigService,
-    @InjectRepository(User, "writable")
+    @InjectRepository(User, "postgres")
     private readonly userRepository: Repository<User>,
   ) { }
 

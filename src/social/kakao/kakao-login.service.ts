@@ -22,7 +22,7 @@ export class KakaoLoginService {
 
   constructor(
     private readonly configService: ConfigService,
-    @InjectRepository(User, "writable")
+    @InjectRepository(User, "postgres")
     private readonly userRepository: Repository<User>,
     private readonly logger: Logger,
   ) { }

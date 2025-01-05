@@ -18,7 +18,7 @@ import {
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Goal, SubGoal, Task], "writable"),
+    TypeOrmModule.forFeature([Goal, SubGoal, Task], "postgres"),
   ],
   controllers: [
     SubGoalController,

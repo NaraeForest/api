@@ -14,7 +14,7 @@ import {
 @Injectable()
 export class GoalService {
   constructor(
-    @InjectRepository(Goal, "writable")
+    @InjectRepository(Goal, "postgres")
     private readonly goalRepository: Repository<Goal>,
   ) { }
 

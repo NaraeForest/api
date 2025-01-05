@@ -17,7 +17,7 @@ import {
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Feed, FeedLike], "writable"),
+    TypeOrmModule.forFeature([Feed, FeedLike], "postgres"),
   ],
   controllers: [
     FeedController,

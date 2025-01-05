@@ -15,7 +15,7 @@ import {
 export class UserService {
 
   constructor(
-    @InjectRepository(User, "writable")
+    @InjectRepository(User, "postgres")
     private readonly userRepository: Repository<User>,
   ) { }
 

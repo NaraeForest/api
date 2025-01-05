@@ -20,7 +20,7 @@ export class NaverLoginService {
 
   constructor(
     private readonly configService: ConfigService,
-    @InjectRepository(User, "writable")
+    @InjectRepository(User, "postgres")
     private readonly userRepository: Repository<User>,
   ) { }
 
@@ -36,6 +36,7 @@ export class NaverLoginService {
     const res = await fetch(`https://nid.naver.com/oauth2.0/token?${urlParams.toString()}`);
     const data = await res.json();
     if (data.error != null) {
+      console.error(data.error, data.error_description);
       // TODO: 에러처리
     }
     return {
