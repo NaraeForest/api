@@ -45,6 +45,18 @@ export class SubGoalController {
     };
   }
 
+  @Get(":sub_goal_id")
+  public async getSubGoal(
+    @Param("goal_id", new ParseIntPipe()) goalId: number,
+    @Param("sub_goal_id", new ParseIntPipe()) subGoalId: number,
+  ) {
+    const subGoal = await this.subGoalService.getSubGoal(goalId, subGoalId);
+    return {
+      success: true,
+      data: subGoal,
+    };
+  }
+
   @UseGuards(AuthGuard)
   @Patch(":sub_goal_id")
   public async patchSubGoal(
@@ -59,15 +71,16 @@ export class SubGoalController {
     };
   }
 
-  @Get(":sub_goal_id")
-  public async getSubGoal(
+  @UseGuards(AuthGuard)
+  @Delete(":sub_goal_id")
+  public async deleteSubGoal(
+    @UserAuth() userId: number,
     @Param("goal_id", new ParseIntPipe()) goalId: number,
     @Param("sub_goal_id", new ParseIntPipe()) subGoalId: number,
   ) {
-    const subGoal = await this.subGoalService.getSubGoal(goalId, subGoalId);
+    const result = await this.subGoalService.deleteSubGoal(goalId, subGoalId, userId);
     return {
-      success: true,
-      data: subGoal,
+      success: result,
     };
   }
 
