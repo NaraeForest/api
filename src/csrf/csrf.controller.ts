@@ -20,7 +20,9 @@ export class CSRFController {
     const token = req.csrfToken();
     return res.json({
       success: true,
-      token,
+      data: {
+        token,
+      },
     });
   }
 }

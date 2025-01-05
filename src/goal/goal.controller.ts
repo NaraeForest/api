@@ -35,7 +35,8 @@ export class GoalController {
   ) {
     const result = await this.goalService.createGoal(body.name, body.category, userId);
     return {
-      success: result,
+      success: true,
+      data: result,
     };
   }
 

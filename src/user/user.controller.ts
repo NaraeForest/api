@@ -54,8 +54,8 @@ export class UserController {
   ) {
     const result = await this.userService.updateProfile(userId, body.nickname, body.bio, body.profileImage, body.headerImage);
     return {
-      success: result
-    }
+      success: result,
+    };
   }
 
   @Get(":user_id")
