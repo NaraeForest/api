@@ -89,10 +89,21 @@ export class FeedController {
     @UserAuth() userId: number,
     @Param("feed_id") feedId: number,
   ) {
-    const like = await this.feedService.toggleLikeFeed(feedId, userId);
+    const likes = await this.feedService.toggleLikeFeed(feedId, userId);
     return {
       success: true,
-      data: like,
+      data: likes,
+    };
+  }
+
+  @Delete(":feed_id")
+  public async deleteFeed(
+    @UserAuth() userId: number,
+    @Param("feed_id") feedId: number,
+  ) {
+    const result = await this.feedService.deleteFeed(feedId, userId);
+    return {
+      success: result,
     };
   }
 }
