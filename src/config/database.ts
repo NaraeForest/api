@@ -1,5 +1,3 @@
-import fs from "node:fs";
-import path from "node:path";
 import {
   ConfigModule,
   ConfigService,
@@ -61,10 +59,5 @@ export const PostgresDataSource = TypeOrmModule.forRootAsync({
     password: configService.getOrThrow("database.password"),
     synchronize: !configService.getOrThrow("isProduction"),
     logging: !configService.getOrThrow("isProduction"),
-    ...(process.env.NODE_ENV === "production" && {
-      ssl: {
-        ca: fs.readFileSync(path.resolve(process.cwd(), "./certificates/ap-northeast-2-bundle.pem")),
-      },
-    }),
   }),
 });
