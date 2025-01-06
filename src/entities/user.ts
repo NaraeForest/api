@@ -40,7 +40,7 @@ export class User extends DefaultEntity {
     type: "text",
     name: "header_image",
     nullable: false,
-    default: "https://cdn.05-project.narumir.io/default.png",
+    default: "https://cdn.narumir.io/default.png",
   })
   headerImage: string;
 

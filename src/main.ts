@@ -1,6 +1,4 @@
 import cookieParser from 'cookie-parser';
-import winston from 'winston';
-import LokiTransport from 'winston-loki';
 import {
   NestFactory,
 } from '@nestjs/core';
@@ -15,38 +13,16 @@ import {
   AppModule,
 } from './app.module';
 import {
-  WinstonModule,
-} from 'nest-winston';
-import {
   ValidationPipe,
 } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const { Console } = winston.transports;
-  const instance = winston.createLogger({
-    format: winston.format.json(),
-    transports: [
-      new LokiTransport({
-        host: configService.getOrThrow("loki.host"),
-        labels: {
-          app: "05-project-server",
-          pod: configService.get("podname"),
-        },
-        json: true,
-      }),
-      new Console(),
-    ],
-  });
-  const logger = WinstonModule.createLogger({
-    instance,
-  });
-  app.useLogger(logger);
   if (!configService.get<boolean>("isProduction")) {
     const config = new DocumentBuilder()
-      .setTitle("05-project")
-      .setDescription("05-project API Document")
+      .setTitle("narae")
+      .setDescription("API Document")
       .build();
     const documentFactory = () => SwaggerModule.createDocument(app, config);
     SwaggerModule.setup("api", app, documentFactory);

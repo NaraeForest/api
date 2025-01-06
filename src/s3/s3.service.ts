@@ -53,6 +53,6 @@ export class S3Service {
     if (result.$metadata.httpStatusCode !== 200) {
       throw new Error("fail to upload");
     }
-    return `https://cdn.05-project.narumir.io/${key}`;
+    return `https://cdn.narumir.io/${key}`;
   }
 }

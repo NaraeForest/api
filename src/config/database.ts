@@ -21,7 +21,7 @@ import {
 
 const defaultDataSoruceOption: TypeOrmModuleOptions = {
   type: "postgres",
-  database: "05-project",
+  database: "narae",
   schema: "public",
   entities: [
     User,
